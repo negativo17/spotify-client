@@ -7,15 +7,15 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.27
+Version:        1.0.28.89.gf959d4ce
 Release:        1%{?dist}
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.71.g0a26e3b2-9_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.73.g602ced10-2_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-37_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-4_i386.deb
 # Debian libraries, required by the binaries. Ugh.
 Source2:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_1.0.2g-1ubuntu2_amd64.deb
 Source3:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_1.0.2g-1ubuntu2_i386.deb
@@ -119,6 +119,9 @@ fi
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Apr 29 2016 Simone Caronni <negativo17@gmail.com> - 1.0.28.89.gf959d4ce-1
+- Update to 1.0.28.89.gf959d4ce.
+
 * Thu Apr 21 2016 Simone Caronni <negativo17@gmail.com> - 1.0.27-1
 - Starting from 1.0.27.x clients versions are misaligned again between 32 and 64
   bit. Just the base version.
