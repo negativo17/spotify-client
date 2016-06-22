@@ -119,7 +119,7 @@ fi
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
-* Wed Jun 22 2016 Anass Ahmed <anass.1430@gmail.com> - 1.0.32.94.g8a839395
+* Wed Jun 22 2016 Anass Ahmed <anass.1430@gmail.com> - 1.0.32.94.g8a839395-1
 - Update to 1.0.32.94.g8a839395.
 - Update OpenSSL libraries.
 
