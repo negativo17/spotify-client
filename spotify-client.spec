@@ -1,5 +1,6 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
+%global         ubuntu_ssl_version 1.0.2g-1ubuntu4.1
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libffmpegsumo\\.so.*|libcrypto\\.so\\..*|libssl\\.so\\..*|libcurl\\.so\\..*)$
@@ -7,18 +8,18 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.32.94.g8a839395
+Version:        1.0.32.96.g3c8a06e6
 Release:        1%{?dist}
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-32_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-2_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-37_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-3_i386.deb
 # Debian libraries, required by the binaries. Ugh.
-Source2:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_1.0.2g-1ubuntu4.1_amd64.deb
-Source3:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_1.0.2g-1ubuntu4.1_i386.deb
+Source2:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_%{ubuntu_ssl_version}_amd64.deb
+Source3:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_%{ubuntu_ssl_version}_i386.deb
 
 Provides:       spotify = %{version}-%{release}
 
@@ -119,6 +120,9 @@ fi
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Jul 01 2016 Simone Caronni <negativo17@gmail.com> - 1.0.32.96.g3c8a06e6-1
+- Update to 1.0.32.96.g3c8a06e6.
+
 * Wed Jun 22 2016 Anass Ahmed <anass.1430@gmail.com> - 1.0.32.94.g8a839395-1
 - Update to 1.0.32.94.g8a839395.
 - Update OpenSSL libraries.
