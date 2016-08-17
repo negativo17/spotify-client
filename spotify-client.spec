@@ -113,7 +113,6 @@ fi
 %{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%doc .%{_datadir}/spotify/README.txt
 %{_bindir}/spotify
 %{_libdir}/%{name}
 %{_datadir}/applications/spotify.desktop
