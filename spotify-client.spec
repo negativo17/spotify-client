@@ -8,15 +8,15 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.36.120.g536a862f
+Version:        1.0.37.152.gc83ea995
 Release:        1%{?dist}
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-20_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-2_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-42_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-42_i386.deb
 # Debian libraries, required by the binaries. Ugh.
 Source2:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_%{ubuntu_ssl_version}_amd64.deb
 Source3:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_%{ubuntu_ssl_version}_i386.deb
@@ -119,6 +119,9 @@ fi
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Sep 06 2016 Simone Caronni <negativo17@gmail.com> - 1.0.37.152.gc83ea995-1
+- Update to 1.0.37.152.gc83ea995.
+
 * Wed Aug 17 2016 Simone Caronni <negativo17@gmail.com> - 1.0.36.120.g536a862f-1
 - Update to 1.0.36.120.g536a862f.
 
