@@ -34,15 +34,15 @@
   <screenshots>
     <screenshot type="default">
       <caption>The main Spotify window</caption>
-      <image type="source" width="1680" height="1050">http://negativo17.org/appstream/spotify-0.png</image>
+      <image type="source" width="1280" height="720">http://negativo17.org/appstream/spotify-0.png</image>
     </screenshot>
     <screenshot>
       <caption>Artist detail</caption>
-      <image type="source" width="1680" height="1050">http://negativo17.org/appstream/spotify-1.png</image>
+      <image type="source" width="1280" height="720">http://negativo17.org/appstream/spotify-1.png</image>
     </screenshot>
     <screenshot>
       <caption>Genre based radio</caption>
-      <image type="source" width="1680" height="1050">http://negativo17.org/appstream/spotify-2.png</image>
+      <image type="source" width="1280" height="720">http://negativo17.org/appstream/spotify-2.png</image>
     </screenshot>
   </screenshots>
 </component>
