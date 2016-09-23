@@ -9,7 +9,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0.38.171.g5e1cd7b2
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
@@ -20,6 +20,7 @@ Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{
 # Debian libraries, required by the binaries. Ugh.
 Source2:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_%{ubuntu_ssl_version}_amd64.deb
 Source3:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_%{ubuntu_ssl_version}_i386.deb
+Source4:        spotify.appdata.xml
 
 Provides:       spotify = %{version}-%{release}
 
@@ -95,14 +96,24 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 cp -f ./lib/*-linux-gnu/lib*.so* %{buildroot}%{_libdir}/%{name}/
 chmod 0755 %{buildroot}%{_libdir}/%{name}/lib*.so*
 
+%if 0%{?fedora} >= 25
+# Install AppData
+mkdir -p %{buildroot}%{_datadir}/appdata
+install -p -m 0644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/
+%endif
+
 %post
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-%{_bindir}/update-desktop-database &> /dev/null || :
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
+/usr/bin/update-desktop-database &> /dev/null || :
+%endif
 
 %postun
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
-%{_bindir}/update-desktop-database &> /dev/null || :
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
+/usr/bin/update-desktop-database &> /dev/null || :
+%endif
 if [ $1 -eq 0 ] ; then
     /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     %{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
@@ -114,11 +125,18 @@ fi
 
 %files
 %{_bindir}/spotify
-%{_libdir}/%{name}
 %{_datadir}/applications/spotify.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+%if 0%{?fedora} >= 25
+%{_datadir}/appdata/%{name}.appdata.xml
+%endif
+%{_libdir}/%{name}
 
 %changelog
+* Fri Sep 23 2016 Simone Caronni <negativo17@gmail.com> - 1.0.38.171.g5e1cd7b2-2
+- Do not run update-desktop-database on Fedora 25+.
+- Add AppStream metadata for Gnome Software.
+
 * Fri Sep 23 2016 Simone Caronni <negativo17@gmail.com> - 1.0.38.171.g5e1cd7b2-1
 - Update to 1.0.38.171.g5e1cd7b2.
 

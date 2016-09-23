@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>spotify.desktop</id>
+  <name>Spotify</name>
+  <summary>Installer for the Spotify client</summary>
+  <description>
+    <p>
+      Listen to the right music, wherever you are. With Spotify, you have access to a world of music. You can listen to artists and albums, or create your own playlist of your favorite songs. Want to discover new music? Choose a ready-made playlist that suits your mood or get personalized recommendations.
+    </p>
+    <p>
+      Listen for free; play any artist, album, or playlist on shuffle mode.
+    </p>
+    <p>
+      Spotify Premium features:
+      <ul>
+        <li>Play any song, any time on any device: mobile, tablet, or your computer.</li>
+        <li>Download music for offline listening.</li>
+        <li>Enjoy amazing sound quality.</li>
+        <li>No ads – just uninterrupted music.</li>
+        <li>No commitment - cancel any time you like.</li>
+      </ul>
+    </p>
+  </description>
+  <translation/>
+  <url type="homepage">https://www.spotify.com/</url>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary:Spotify</project_license>
+  <developer_name>Spotify AB</developer_name>
+  <keywords>
+    <keyword>Music</keyword>
+    <keyword>Streaming</keyword>
+  </keywords>
+  <update_contact>negativo17@gmail.com</update_contact>
+  <screenshots>
+    <screenshot type="default">
+      <caption>The main Spotify window</caption>
+      <image type="source" width="1680" height="1050">http://negativo17.org/appstream/spotify-0.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Artist detail</caption>
+      <image type="source" width="1680" height="1050">http://negativo17.org/appstream/spotify-1.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Genre based radio</caption>
+      <image type="source" width="1680" height="1050">http://negativo17.org/appstream/spotify-2.png</image>
+    </screenshot>
+  </screenshots>
+</component>
