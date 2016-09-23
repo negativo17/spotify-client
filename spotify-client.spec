@@ -128,7 +128,7 @@ fi
 %{_datadir}/applications/spotify.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %if 0%{?fedora} >= 25
-%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/appdata/spotify.appdata.xml
 %endif
 %{_libdir}/%{name}
 
