@@ -9,14 +9,14 @@
     </p>
     <p>
       Spotify Premium features:
-      <ul>
-        <li>Play any song, any time on any device: mobile, tablet, or your computer.</li>
-        <li>Download music for offline listening.</li>
-        <li>Enjoy amazing sound quality.</li>
-        <li>No ads – just uninterrupted music.</li>
-        <li>No commitment - cancel any time you like.</li>
-      </ul>
     </p>
+    <ul>
+      <li>Play any song, any time on any device: mobile, tablet, or your computer.</li>
+      <li>Download music for offline listening.</li>
+      <li>Enjoy amazing sound quality.</li>
+      <li>No ads – just uninterrupted music.</li>
+      <li>No commitment - cancel any time you like.</li>
+    </ul>
   </description>
   <translation/>
   <url type="homepage">https://www.spotify.com/</url>
