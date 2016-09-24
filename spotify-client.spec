@@ -9,7 +9,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0.38.171.g5e1cd7b2
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
@@ -103,14 +103,18 @@ install -p -m 0644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/
 %endif
 
 %post
+%if 0%{?fedora} == 23 || 0%{?rhel} == 7
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
+%endif
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 %if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
 
 %postun
+%if 0%{?fedora} == 23 || 0%{?rhel} == 7
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
+%endif
 %if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
@@ -120,7 +124,9 @@ if [ $1 -eq 0 ] ; then
 fi
 
 %posttrans
+%if 0%{?fedora} == 23 || 0%{?rhel} == 7
 %{_bindir}/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
+%endif
 %{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
@@ -133,6 +139,9 @@ fi
 %{_libdir}/%{name}
 
 %changelog
+* Sat Sep 24 2016 Simone Caronni <negativo17@gmail.com> - 1.0.38.171.g5e1cd7b2-3
+- Do not run update-mime-database on Fedora 24+.
+
 * Fri Sep 23 2016 Simone Caronni <negativo17@gmail.com> - 1.0.38.171.g5e1cd7b2-2
 - Do not run update-desktop-database on Fedora 25+.
 - Add AppStream metadata for Gnome Software.
