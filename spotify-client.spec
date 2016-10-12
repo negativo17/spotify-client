@@ -9,7 +9,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0.38.171.g5e1cd7b2
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
@@ -17,15 +17,9 @@ ExclusiveArch:  x86_64 %{ix86}
 # Misaligned versions between 32 and 64 bit, just use the base version.
 Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-22_amd64.deb
 Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-22_i386.deb
-# Debian libraries, required by the binaries. Ugh.
-Source2:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_%{ubuntu_ssl_version}_amd64.deb
-Source3:        http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.0.0_%{ubuntu_ssl_version}_i386.deb
 Source4:        spotify.appdata.xml
 
 Provides:       spotify = %{version}-%{release}
-
-# Libraries linked in the package (no auto require)
-Provides:       bundled(libssl-Debian) = 1.0.2g
 
 # Obsoletes old data subpackage
 Provides:       spotify-client-data = %{version}-%{release}
@@ -33,12 +27,9 @@ Obsoletes:      spotify-client-data < %{version}-%{release}
 
 BuildRequires:  desktop-file-utils
 #BuildRequires:  chrpath
+Requires:       compat-openssl
 Requires:       ffmpeg-libs
 Requires:       hicolor-icon-theme
-
-%if 0%{?fedora} || 0%{?rhel} >= 8
-Requires:       compat-libgcrypt
-%endif
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
@@ -53,15 +44,11 @@ there’s no need to wait for downloads and no big dent in your hard drive.
 %ifarch x86_64
 ar x %{SOURCE0}
 tar -xzf data.tar.gz
-ar x %{SOURCE2}
-tar -xJf data.tar.xz
 %endif
 
 %ifarch %{ix86}
 ar x %{SOURCE1}
 tar -xzf data.tar.gz
-ar x %{SOURCE3}
-tar -xJf data.tar.xz
 %endif
 
 # chrpath -d spotify Data/SpotifyHelper
@@ -93,7 +80,6 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 # Extra libraries: the binaries expects the libraries along with the main
 # "spotify" binary or in the "Data" folder. "SpotifyHelper" expects them only in
 # the "Data" folder. So put everything in the "Data" folder.
-cp -f ./lib/*-linux-gnu/lib*.so* %{buildroot}%{_libdir}/%{name}/
 chmod 0755 %{buildroot}%{_libdir}/%{name}/lib*.so*
 
 %if 0%{?fedora} >= 25
@@ -139,6 +125,10 @@ fi
 %{_libdir}/%{name}
 
 %changelog
+* Wed Oct 12 2016 Simone Caronni <negativo17@gmail.com> - 1.0.38.171.g5e1cd7b2-4
+- No longer requires compatibility libgcrypt package.
+- Move SSL libraries in compatibility package.
+
 * Sat Sep 24 2016 Simone Caronni <negativo17@gmail.com> - 1.0.38.171.g5e1cd7b2-3
 - Do not run update-mime-database on Fedora 24+.
 
