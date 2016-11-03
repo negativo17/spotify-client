@@ -3,20 +3,20 @@
 %global         ubuntu_ssl_version 1.0.2g-1ubuntu4.1
 
 # Remove bundled libraries from requirements/provides
-%global         __requires_exclude ^(libcef\\.so.*|libffmpegsumo\\.so.*|libcrypto\\.so\\..*|libssl\\.so\\..*|libcurl\\.so\\..*)$
+%global         __requires_exclude ^(libcef\\.so.*|libffmpegsumo\\.so.*|libcrypto\\.so\\..*|libssl\\.so\\..*|libcurl\\.so\\..*|libwidevine.*\\.so.*)$
 %global         __provides_exclude ^(lib.*\\.so.*)$
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.38.171.g5e1cd7b2
-Release:        4%{?dist}
+Version:        1.0.42.145.g7a5a182e
+Release:        1%{?dist}
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-22_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-22_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-37_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-17_i386.deb
 Source4:        spotify.appdata.xml
 
 Provides:       spotify = %{version}-%{release}
@@ -51,7 +51,7 @@ ar x %{SOURCE1}
 tar -xzf data.tar.gz
 %endif
 
-# chrpath -d spotify Data/SpotifyHelper
+# chrpath -d spotify libwidevinecdmadapter.so
 
 %build
 # Nothing to build
@@ -76,11 +76,6 @@ for size in 16 22 24 32 48 64 128 256 512; do
 done
 
 desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
-
-# Extra libraries: the binaries expects the libraries along with the main
-# "spotify" binary or in the "Data" folder. "SpotifyHelper" expects them only in
-# the "Data" folder. So put everything in the "Data" folder.
-chmod 0755 %{buildroot}%{_libdir}/%{name}/lib*.so*
 
 %if 0%{?fedora} >= 25
 # Install AppData
@@ -125,6 +120,9 @@ fi
 %{_libdir}/%{name}
 
 %changelog
+* Thu Nov 03 2016 Simone Caronni <negativo17@gmail.com> - 1.0.42.145.g7a5a182e-1
+- Update to 1.0.42.145.g7a5a182e.
+
 * Wed Oct 12 2016 Simone Caronni <negativo17@gmail.com> - 1.0.38.171.g5e1cd7b2-4
 - No longer requires compatibility libgcrypt package.
 - Move SSL libraries in compatibility package.
