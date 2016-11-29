@@ -1,6 +1,5 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
-%global         ubuntu_ssl_version 1.0.2g-1ubuntu4.1
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libffmpegsumo\\.so.*|libcrypto\\.so\\..*|libssl\\.so\\..*|libcurl\\.so\\..*|libwidevine.*\\.so.*)$
@@ -8,15 +7,15 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.42.151.g19de0aa6
+Version:        1.0.43.123.g80176796
 Release:        1%{?dist}
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-74_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-27_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-86_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-25_i386.deb
 Source4:        spotify.appdata.xml
 
 Provides:       spotify = %{version}-%{release}
@@ -120,6 +119,9 @@ fi
 %{_libdir}/%{name}
 
 %changelog
+* Tue Nov 29 2016 Simone Caronni <negativo17@gmail.com> - 1.0.43.123.g80176796-1
+- Update to 1.0.43.123.g80176796.
+
 * Wed Nov 09 2016 Simone Caronni <negativo17@gmail.com> - 1.0.42.151.g19de0aa6-1
 - Update to 1.0.42.151.g19de0aa6.
 
