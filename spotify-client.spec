@@ -27,8 +27,11 @@ Obsoletes:      spotify-client-data < %{version}-%{release}
 BuildRequires:  desktop-file-utils
 #BuildRequires:  chrpath
 Requires:       compat-openssl
-Requires:       ffmpeg-libs
 Requires:       hicolor-icon-theme
+
+%if 0%{?fedora}
+Suggests:       compat-ffmpeg-libs
+%endif
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
@@ -121,6 +124,7 @@ fi
 %changelog
 * Thu Dec 08 2016 Simone Caronni <negativo17@gmail.com> - 1.0.43.125.g376063c5-1
 - Update to 1.0.43.125.g376063c5 (x86_64 only).
+- Suggests compat-ffmpeg-libs (2.8.x) instead of requiring ffmpeg-libs (3.2.x).
 
 * Tue Nov 29 2016 Simone Caronni <negativo17@gmail.com> - 1.0.43.123.g80176796-1
 - Update to 1.0.43.123.g80176796.
