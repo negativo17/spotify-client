@@ -1,0 +1,28 @@
+Spotify connect configuration
+=============================
+
+According to the documentation, Spotify Connect uses TCP and UDP port 57621.
+
+The package includes the required service definitions for FirewallD. If you have
+installed a default desktop, FirewallD should be your firewall solution. To make
+sure that Steam can listen on the required ports through your firewall software,
+execute the following commands as root.
+
+You should then be able to see the word “steam” by running:
+
+ # firewall-cmd --get-services | grep spotify
+
+Then get the firewall zone you are in, and enable the service for it. For
+example, on my system, to get the firewall zone I’m using:
+
+ # firewall-cmd --get-active-zones 
+ public
+   interfaces: em1
+
+Then enable it permanently (i.e. at reboot) and immediately with these commands:
+
+ # firewall-cmd --zone=public --add-service=spotify --permanent
+ # firewall-cmd --zone=public --add-service=spotify
+
+Now start up Spotify and you should see all the available devices in your
+network.

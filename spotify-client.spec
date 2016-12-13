@@ -7,16 +7,20 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.43.125.g376063c5
+Version:        1.0
 Release:        1%{?dist}
+Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
-# Misaligned versions between 32 and 64 bit, just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-91_amd64.deb
-#Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-25_i386.deb
+# Misaligned versions between 32 and 64 bit, sometimes on minor releases as well. Just use the base version.
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.43.125.g376063c5-91_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.43.123.g80176796-25_i386.deb
+Source3:        spotify.xml
 Source4:        spotify.appdata.xml
+
+Source10:       README.Fedora
 
 Provides:       spotify = %{version}-%{release}
 
@@ -31,6 +35,16 @@ Requires:       hicolor-icon-theme
 
 %if 0%{?fedora}
 Suggests:       compat-ffmpeg-libs
+%endif
+
+# Required for the firewall rules
+# http://fedoraproject.org/wiki/PackagingDrafts/ScriptletSnippets/Firewalld
+%if 0%{?rhel}
+Requires:       firewalld
+Requires(post): firewalld
+%else
+Requires:       firewalld-filesystem
+Requires(post): firewalld-filesystem
 %endif
 
 %description
@@ -54,6 +68,8 @@ tar -xzf data.tar.gz
 %endif
 
 # chrpath -d spotify libwidevinecdmadapter.so
+
+cp %{SOURCE10} .
 
 %build
 # Nothing to build
@@ -79,6 +95,9 @@ done
 
 desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 
+install -D -m 644 -p %{SOURCE3} \
+    %{buildroot}%{_prefix}/lib/firewalld/services/spotify.xml
+
 %if 0%{?fedora} >= 25
 # Install AppData
 mkdir -p %{buildroot}%{_datadir}/appdata
@@ -93,6 +112,7 @@ install -p -m 0644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/
 %if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
+%firewalld_reload
 
 %postun
 %if 0%{?fedora} == 23 || 0%{?rhel} == 7
@@ -113,6 +133,7 @@ fi
 %{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
+%doc README.Fedora
 %{_bindir}/spotify
 %{_datadir}/applications/spotify.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
@@ -120,8 +141,14 @@ fi
 %{_datadir}/appdata/spotify.appdata.xml
 %endif
 %{_libdir}/%{name}
+%{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Tue Dec 13 2016 Simone Caronni <negativo17@gmail.com> - 1:1.0-1
+- Add spotify connect firewall rules.
+- Switch to a base version number with incremental releases to solve the problem
+  of 32 and 64 bit client versions not being in sync.
+
 * Thu Dec 08 2016 Simone Caronni <negativo17@gmail.com> - 1.0.43.125.g376063c5-1
 - Update to 1.0.43.125.g376063c5 (x86_64 only).
 - Suggests compat-ffmpeg-libs (2.8.x) instead of requiring ffmpeg-libs (3.2.x).
