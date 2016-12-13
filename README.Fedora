@@ -26,3 +26,21 @@ Then enable it permanently (i.e. at reboot) and immediately with these commands:
 
 Now start up Spotify and you should see all the available devices in your
 network.
+
+If you don’t have SSDP (Simple Service Discovery Protocol) already enabled on
+your system, you also need to enable it. Paste the following XML file in
+/etc/firewalld/services/ssdp.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<service version="1">
+  <short>Multicast SSDP (upnp)</short>
+  <description>Simple Service Discovery Protocol for advertisement and discovery of network services and presence information.</description>
+  <port protocol="udp" port="1900"/>
+  <destination ipv6="ff02::c" ipv4="239.255.255.250"/>
+</service>
+
+Then run the following commands, with the same zone you have used above:
+
+ # firewall-cmd --reload --quiet
+ # firewall-cmd --zone=public --add-service=ssdp --permanent
+ # firewall-cmd --zone=public --add-service=ssdp
