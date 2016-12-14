@@ -5,10 +5,13 @@
 %global         __requires_exclude ^(libcef\\.so.*|libffmpegsumo\\.so.*|libcrypto\\.so\\..*|libssl\\.so\\..*|libcurl\\.so\\..*|libwidevine.*\\.so.*)$
 %global         __provides_exclude ^(lib.*\\.so.*)$
 
+# If firewalld macro is not defined, define it here:
+%{!?firewalld_reload:%global firewalld_reload test -f /usr/bin/firewall-cmd && firewall-cmd --reload --quiet || :}
+
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -144,6 +147,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Wed Dec 14 2016 Simone Caronni <negativo17@gmail.com> - 1:1.0-3
+- Add firewalld macro if not defined.
+
 * Wed Dec 14 2016 Simone Caronni <negativo17@gmail.com> - 1:1.0-2
 - Update to 1.0.44.100.ga60c0ce1.
 
