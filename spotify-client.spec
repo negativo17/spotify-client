@@ -8,15 +8,15 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, sometimes on minor releases as well. Just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.43.125.g376063c5-91_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.43.123.g80176796-25_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.44.100.ga60c0ce1-89_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.44.100.ga60c0ce1-29_i386.deb
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
 
@@ -144,6 +144,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Wed Dec 14 2016 Simone Caronni <negativo17@gmail.com> - 1:1.0-2
+- Update to 1.0.44.100.ga60c0ce1.
+
 * Tue Dec 13 2016 Simone Caronni <negativo17@gmail.com> - 1:1.0-1
 - Add spotify connect firewall rules.
 - Switch to a base version number with incremental releases to solve the problem
