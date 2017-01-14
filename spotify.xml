@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Spotify Connect</short>
+  <description>Listen on your speakers or TV, using the Spotify app as a remote</description>
+  <port protocol="tcp" port="57621"/>
+  <port protocol="udp" port="57621"/>
+</service>
