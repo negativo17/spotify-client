@@ -11,7 +11,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        8%{?dist}
+Release:        9%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -25,16 +25,13 @@ Source4:        spotify.appdata.xml
 
 Source10:       README.Fedora
 
+BuildRequires:  desktop-file-utils
+
 Provides:       spotify = %{version}-%{release}
 
-# Obsoletes old data subpackage
-Provides:       spotify-client-data = %{version}-%{release}
-Obsoletes:      spotify-client-data < %{version}-%{release}
-
-BuildRequires:  desktop-file-utils
 #BuildRequires:  chrpath
-Requires:       compat-openssl
 Requires:       hicolor-icon-theme
+Requires:       spotify-openssl
 
 %if 0%{?fedora}
 Suggests:       compat-ffmpeg-libs
@@ -105,6 +102,7 @@ install -D -m 644 -p %{SOURCE3} \
 # Install AppData
 mkdir -p %{buildroot}%{_datadir}/appdata
 install -p -m 0644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/spotify.appdata.xml
 %endif
 
 %post
@@ -147,6 +145,11 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sun Feb 12 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-9
+- Move OpenSSL 1.0.0t compatibility libraries to the Spotify folder. Having them
+  installed on the system breaks some Steam games which are built agains the
+  Steam Runtime (mostly Feral Interactive games).
+
 * Sun Feb 12 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-8
 - Update to 1.0.49.125.g72ee7853.
 
