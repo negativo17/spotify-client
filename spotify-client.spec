@@ -80,7 +80,7 @@ cp %{SOURCE10} .
 %install
 mkdir -p %{buildroot}%{_libdir}/%{name}
 cp -frp .%{_datadir}/spotify/* %{buildroot}%{_libdir}/%{name}
-rm -fr %{buildroot}%{_libdir}/%{name}/*.{sh,txt,desktop}
+rm -fr %{buildroot}%{_libdir}/%{name}/*.{sh,txt,desktop,gpg}
 chmod +x %{buildroot}%{_libdir}/%{name}/*.so
 
 mkdir -p %{buildroot}%{_bindir}
