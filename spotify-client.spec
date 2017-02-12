@@ -27,6 +27,10 @@ Source10:       README.Fedora
 
 BuildRequires:  desktop-file-utils
 
+%if 0%{?fedora} >= 25
+BuildRequires:  libappstream-glib
+%endif
+
 Provides:       spotify = %{version}-%{release}
 
 #BuildRequires:  chrpath
