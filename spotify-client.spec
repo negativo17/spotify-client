@@ -11,7 +11,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        9%{?dist}
+Release:        10%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -35,11 +35,8 @@ Provides:       spotify = %{version}-%{release}
 
 #BuildRequires:  chrpath
 Requires:       hicolor-icon-theme
+Requires:       spotify-ffmpeg
 Requires:       spotify-openssl
-
-%if 0%{?fedora}
-Suggests:       compat-ffmpeg-libs
-%endif
 
 # Required for the firewall rules
 # http://fedoraproject.org/wiki/PackagingDrafts/ScriptletSnippets/Firewalld
@@ -149,6 +146,10 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Tue Feb 21 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-10
+- Require custom built FFMpeg 0.10.x without external dependencies to support
+  playing / syncing of local files.
+
 * Sun Feb 12 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-9
 - Move OpenSSL 1.0.0t compatibility libraries to the Spotify folder. Having them
   installed on the system breaks some Steam games which are built agains the
