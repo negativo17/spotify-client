@@ -11,15 +11,15 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        10%{?dist}
+Release:        11%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, sometimes on minor releases as well. Just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.49.125.g72ee7853-83_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.49.125.g72ee7853-21_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.49.125.g72ee7853-111_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.49.125.g72ee7853-22_i386.deb
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
 
@@ -146,6 +146,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Fri Feb 24 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-11
+- Update to newers builds of 1.0.49.125.g72ee7853.
+
 * Tue Feb 21 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-10
 - Require custom built FFMpeg 0.10.x without external dependencies to support
   playing / syncing of local files.
