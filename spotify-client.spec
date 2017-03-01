@@ -11,7 +11,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        11%{?dist}
+Release:        12%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -20,11 +20,13 @@ ExclusiveArch:  x86_64 %{ix86}
 # Misaligned versions between 32 and 64 bit, sometimes on minor releases as well. Just use the base version.
 Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.49.125.g72ee7853-111_amd64.deb
 Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.49.125.g72ee7853-22_i386.deb
+Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
 
 Source10:       README.Fedora
 
+BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
 
 %if 0%{?fedora} >= 25
@@ -32,11 +34,9 @@ BuildRequires:  libappstream-glib
 %endif
 
 Provides:       spotify = %{version}-%{release}
-
-#BuildRequires:  chrpath
 Requires:       hicolor-icon-theme
-Requires:       spotify-ffmpeg
-Requires:       spotify-openssl
+Requires:       spotify-ffmpeg%{?_isa}
+Requires:       spotify-openssl%{?_isa}
 
 # Required for the firewall rules
 # http://fedoraproject.org/wiki/PackagingDrafts/ScriptletSnippets/Firewalld
@@ -68,7 +68,9 @@ ar x %{SOURCE1}
 tar -xzf data.tar.gz
 %endif
 
-# chrpath -d spotify libwidevinecdmadapter.so
+chrpath -d \
+    .%{_datadir}/spotify/libwidevinecdmadapter.so \
+    .%{_datadir}/spotify/spotify
 
 cp %{SOURCE10} .
 
@@ -82,7 +84,9 @@ rm -fr %{buildroot}%{_libdir}/%{name}/*.{sh,txt,desktop,gpg}
 chmod +x %{buildroot}%{_libdir}/%{name}/*.so
 
 mkdir -p %{buildroot}%{_bindir}
-ln -sf %{_libdir}/%{name}/spotify %{buildroot}%{_bindir}/spotify
+cat %{SOURCE2} | sed -e 's|INSTALL_DIR|%{_libdir}/%{name}|g' \
+    > %{buildroot}%{_bindir}/spotify
+chmod +x %{buildroot}%{_bindir}/spotify
 
 install -m 0644 -D -p .%{_datadir}/spotify/spotify.desktop \
     %{buildroot}%{_datadir}/applications/spotify.desktop
@@ -146,8 +150,13 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Wed Mar 01 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-12
+- Use a wrapper script to remove RUNPATH and make the client find all its
+  libraries in a private location.
+- Require compatiblity packages of the same architecture.
+
 * Fri Feb 24 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-11
-- Update to newers builds of 1.0.49.125.g72ee7853.
+- Update to newer builds of 1.0.49.125.g72ee7853.
 
 * Tue Feb 21 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-10
 - Require custom built FFMpeg 0.10.x without external dependencies to support
