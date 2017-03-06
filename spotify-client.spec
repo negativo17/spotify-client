@@ -11,7 +11,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        13%{?dist}
+Release:        15%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -79,27 +79,39 @@ cp %{SOURCE10} .
 
 %install
 mkdir -p %{buildroot}%{_libdir}/%{name}
-cp -frp .%{_datadir}/spotify/* %{buildroot}%{_libdir}/%{name}
-rm -fr %{buildroot}%{_libdir}/%{name}/*.{sh,txt,desktop,gpg}
-chmod +x %{buildroot}%{_libdir}/%{name}/*.so
 
+# Program resources - 512x512 icon along main executable is needed by the client
+cp -frp \
+    .%{_datadir}/spotify/*.{pak,dat,bin} \
+    .%{_datadir}/spotify/{Apps,locales} \
+    %{buildroot}%{_libdir}/%{name}
+install -p -D -m 644 .%{_datadir}/spotify/icons/spotify-linux-512.png \
+    %{buildroot}%{_libdir}/%{name}/icons/spotify-linux-512.png
+
+# Binaries
+install -p -m 755 \
+    .%{_datadir}/spotify/*.so \
+    .%{_datadir}/spotify/spotify \
+    %{buildroot}%{_libdir}/%{name}/
+
+# Wrapper script
 mkdir -p %{buildroot}%{_bindir}
 cat %{SOURCE2} | sed -e 's|INSTALL_DIR|%{_libdir}/%{name}|g' \
     > %{buildroot}%{_bindir}/spotify
 chmod +x %{buildroot}%{_bindir}/spotify
 
+# Desktop file
 install -m 0644 -D -p .%{_datadir}/spotify/spotify.desktop \
     %{buildroot}%{_datadir}/applications/spotify.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 
-# Also leave icons along main executable as they are needed by the client. We
-# can't just symlink them or RPM will complain with the broken links.
+# Icons
 for size in 16 22 24 32 48 64 128 256 512; do
     install -p -D -m 644 .%{_datadir}/spotify/icons/spotify-linux-${size}.png \
         %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/%{name}.png
 done
 
-desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
-
+# Firewalld rules
 install -D -m 644 -p %{SOURCE3} \
     %{buildroot}%{_prefix}/lib/firewalld/services/spotify.xml
 
@@ -150,6 +162,10 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Mar 06 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-15
+- Remove all icons from the program data folder except the 512x512 one that is
+  used as a resource by the client.
+
 * Mon Mar 06 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-13
 - Update firewalld rules for allowing syncing of local files across devices on
   the same Wi-Fi network.
