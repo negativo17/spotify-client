@@ -6,7 +6,9 @@ installed a default desktop, FirewallD should be your firewall solution. To make
 sure that Spotify can listen on the required ports through your firewall
 software, execute the following commands as root.
 
-According to the documentation, Spotify Connect uses TCP and UDP port 57621.
+Spotify Connect uses TCP and UDP port 57621. TCP port 57622 is to sync local
+files that are part of a playlist with devices that are on the same Wi-Fi
+network.
 
 After installation you should be able to see the word “spotify” by running:
 

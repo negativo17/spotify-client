@@ -11,7 +11,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        12%{?dist}
+Release:        13%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -150,6 +150,10 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Mar 06 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-13
+- Update firewalld rules for allowing syncing of local files across devices on
+  the same Wi-Fi network.
+
 * Wed Mar 01 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-12
 - Use a wrapper script to remove RUNPATH and make the client find all its
   libraries in a private location.
