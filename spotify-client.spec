@@ -11,15 +11,15 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        15%{?dist}
+Release:        16%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, sometimes on minor releases as well. Just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.49.125.g72ee7853-111_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.49.125.g72ee7853-22_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.52.717.g2f08534a-47_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.52.717.g2f08534a-47_i386.deb
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -162,6 +162,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Mar 27 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-16
+- Udpate to 1.0.52.717.g2f08534a.
+
 * Mon Mar 06 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-15
 - Remove all icons from the program data folder except the 512x512 one that is
   used as a resource by the client.
