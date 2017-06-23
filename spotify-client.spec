@@ -11,15 +11,15 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        18%{?dist}
+Release:        19%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, sometimes on minor releases as well. Just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.55.487.g256699aa-16_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.55.487.g256699aa-16_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.57.474.gca9c9538-30_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.57.474.gca9c9538-30_i386.deb
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -123,20 +123,20 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/spotify.a
 %endif
 
 %post
-%if 0%{?fedora} == 23 || 0%{?rhel} == 7
+%if 0%{?rhel} == 7
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
 %endif
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
+%if 0%{?fedora} == 24 || 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
 %firewalld_reload
 
 %postun
-%if 0%{?fedora} == 23 || 0%{?rhel} == 7
+%if 0%{?rhel} == 7
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
 %endif
-%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
+%if 0%{?fedora} == 24 || 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
 if [ $1 -eq 0 ] ; then
@@ -145,7 +145,7 @@ if [ $1 -eq 0 ] ; then
 fi
 
 %posttrans
-%if 0%{?fedora} == 23 || 0%{?rhel} == 7
+%if 0%{?rhel} == 7
 %{_bindir}/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 %endif
 %{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
@@ -162,6 +162,10 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Fri Jun 23 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-19
+- Update to 1.0.57.474.gca9c9538.
+- Remove obsolete checks for Fedora 23.
+
 * Wed May 24 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-18
 - Update to 1.0.55.487.g256699aa.
 
