@@ -46,3 +46,17 @@ Then run the following commands, with the same zone you have used above:
  # firewall-cmd --reload --quiet
  # firewall-cmd --zone=public --add-service=ssdp --permanent
  # firewall-cmd --zone=public --add-service=ssdp
+
+HiDPI displays
+==============
+
+If the fonts displayed in the main GUI are too small for your high resolution
+display, you can try the following command to scale out the fonts to your
+desired size.
+
+Note that this is a parameter for the Chromium Embedded Framework onto which
+the Spotify client is built upon, and not a Spotify parameter per se.
+
+ $ spotify --force-device-scale-factor=1.25
+
+Try with different scaling factors until you find the right settings.
