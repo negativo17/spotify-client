@@ -11,15 +11,15 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        19%{?dist}
+Release:        20%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
 # Misaligned versions between 32 and 64 bit, sometimes on minor releases as well. Just use the base version.
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.57.474.gca9c9538-30_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.57.474.gca9c9538-30_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.59.395.ge6ca9946-18_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}.59.395.ge6ca9946-18_i386.deb
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -162,6 +162,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Fri Jul 21 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-20
+- Update to 1.0.59.395.ge6ca9946.
+
 * Fri Jun 23 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-19
 - Update to 1.0.57.474.gca9c9538.
 - Remove obsolete checks for Fedora 23.
