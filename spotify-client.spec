@@ -28,10 +28,7 @@ Source10:       README.Fedora
 
 BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
-
-%if 0%{?fedora} >= 25
 BuildRequires:  libappstream-glib
-%endif
 
 Provides:       spotify = %{version}-%{release}
 Requires:       hicolor-icon-theme
@@ -115,7 +112,7 @@ done
 install -D -m 644 -p %{SOURCE3} \
     %{buildroot}%{_prefix}/lib/firewalld/services/spotify.xml
 
-%if 0%{?fedora} >= 25
+%if 0%{?fedora}
 # Install AppData
 mkdir -p %{buildroot}%{_datadir}/appdata
 install -p -m 0644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/
@@ -127,7 +124,7 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/spotify.a
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
 %endif
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-%if 0%{?fedora} == 24 || 0%{?rhel} == 7
+%if 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
 %firewalld_reload
@@ -136,7 +133,7 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/spotify.a
 %if 0%{?rhel} == 7
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
 %endif
-%if 0%{?fedora} == 24 || 0%{?rhel} == 7
+%if 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
 if [ $1 -eq 0 ] ; then
@@ -155,7 +152,7 @@ fi
 %{_bindir}/spotify
 %{_datadir}/applications/spotify.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-%if 0%{?fedora} >= 25
+%if 0%{?fedora}
 %{_datadir}/appdata/spotify.appdata.xml
 %endif
 %{_libdir}/%{name}
