@@ -11,7 +11,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0
-Release:        21%{?dist}
+Release:        22%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -32,6 +32,9 @@ BuildRequires:  libappstream-glib
 
 Provides:       spotify = %{version}-%{release}
 Requires:       hicolor-icon-theme
+%if 0%{?fedora} >= 27
+Requires:       spotify-curl%{?_isa}
+%endif
 Requires:       spotify-ffmpeg%{?_isa}
 Requires:       spotify-openssl%{?_isa}
 
@@ -159,6 +162,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Tue Oct 10 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0-22
+- Require spotify-curl on Fedora 27+.
+
 * Tue Oct  3 2017 Matus Honek <matushonek@gmail.com> - 1:1.0-21
 - Update to 1.0.64.407.g9bd02c2d.
 
