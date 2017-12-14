@@ -10,15 +10,15 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.67.582.g19436fa3
+Version:        1.0.69.336.g7edcc575
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-28_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-28_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-39_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-39_i386.deb
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -161,6 +161,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Thu Dec 14 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0.69.336.g7edcc575-1
+- Update to 1.0.69.336.g7edcc575.
+
 * Tue Nov 28 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0.67.582.g19436fa3-1
 - Update to 1.0.67.582.g19436fa3.
 
