@@ -2,7 +2,11 @@
 %global         __strip /bin/true
 
 # Remove bundled libraries from requirements/provides
-%global         __requires_exclude ^(libcef\\.so.*|libffmpegsumo\\.so.*|libcrypto\\.so\\..*|libssl\\.so\\..*|libcurl\\.so\\..*|libwidevine.*\\.so.*)$
+%if 0%{?rhel} == 7
+%global         __requires_exclude ^(libcef\\.so.*|libwidevine.*\\.so.*|libcurl\\.so\\..*|libcrypto\\.so\\..*|libssl\\.so\\..*)$
+%else
+%global         __requires_exclude ^(libcef\\.so.*|libwidevine.*\\.so.*|libcurl\\.so\\..*)$
+%endif
 %global         __provides_exclude ^(lib.*\\.so.*)$
 
 # If firewalld macro is not defined, define it here:
@@ -10,15 +14,15 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.69.336.g7edcc575
+Version:        1.0.70.399.g5ffabd56
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-39_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-39_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-26_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-27_i386.deb
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -31,20 +35,22 @@ BuildRequires:  libappstream-glib
 
 Provides:       spotify = %{version}-%{release}
 Requires:       hicolor-icon-theme
-%if 0%{?fedora} >= 27
-Requires:       spotify-curl%{?_isa}
-%endif
 Requires:       spotify-ffmpeg%{?_isa}
-Requires:       spotify-openssl%{?_isa}
 
-# Required for the firewall rules
-# http://fedoraproject.org/wiki/PackagingDrafts/ScriptletSnippets/Firewalld
-%if 0%{?rhel}
+%if 0%{?fedora} >= 27 || 0%{?rhel} == 7
+Requires:       spotify-curl%{?_isa}
+%else
+Requires:       libcurl%{?_isa}
+%endif
+
+%if 0%{?rhel} == 7
 Requires:       firewalld
 Requires(post): firewalld
+Requires:       spotify-openssl%{?_isa} >= 1.1
 %else
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
+Obsoletes:      spotify-openssl%{?_isa}
 %endif
 
 %description
@@ -161,6 +167,12 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sat Jan 06 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.70.399.g5ffabd56-1
+- Update to 1.0.70.399.g5ffabd56.
+- OpenSSL requirement has switched to 1.1, so add a spotify-openssl 1.1 package
+  to RHEL/CentOS and obsolete the 1.0 one in Fedora.
+- Require CURL update only on Fedora 27 (too new) and RHEL 7 (too old).
+
 * Thu Dec 14 2017 Simone Caronni <negativo17@gmail.com> - 1:1.0.69.336.g7edcc575-1
 - Update to 1.0.69.336.g7edcc575.
 

@@ -1,14 +1,10 @@
 #!/bin/sh
 # Wrapper script for Spotify.
 
-# The spotify binary has a RUNPATH of its origin folder. It requires an OpenSSL
-# 1.0 library and a FFMpeg 0.10.6 library compiled with minimum options (no
-# external dependencies) for local file playback.
-#
-# - The OpenSSL 1.0 library breaks Steam if it is picked up automatically from
-#   the system path. It can be loaded from the RUNPATH in its private folder.
-# - The FFMpeg library is loaded ONLY on the system path libraries, ignoring the
-#   RUNPATH.
+# The spotify binary has a RUNPATH of its origin folder. It requires a few
+# librares compiled with minimum options (no external dependencies).
+# The FFMpeg library is loaded ONLY on the system path libraries, ignoring the
+# RUNPATH.
 
 # So remove the RUNPATH from the binary, put all the libraries in its private
 # folder and make sure that only the spotify binary can access them.
