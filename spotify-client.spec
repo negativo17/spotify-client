@@ -14,15 +14,15 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.70.399.g5ffabd56
+Version:        1.0.72.117.g6bd7cc73
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64 %{ix86}
 
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-26_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-27_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-35_amd64.deb
+Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-35_i386.deb
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -167,6 +167,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Mar 05 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.72.117.g6bd7cc73-1
+- Update to 1.0.72.117.g6bd7cc73.
+
 * Sat Jan 06 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.70.399.g5ffabd56-1
 - Update to 1.0.70.399.g5ffabd56.
 - OpenSSL requirement has switched to 1.1, so add a spotify-openssl 1.1 package
