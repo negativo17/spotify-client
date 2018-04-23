@@ -14,15 +14,14 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.72.117.g6bd7cc73
+Version:        1.0.77.338.g758ebd78
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
-ExclusiveArch:  x86_64 %{ix86}
+ExclusiveArch:  x86_64
 
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-35_amd64.deb
-Source1:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-35_i386.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-41_amd64.deb
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -63,15 +62,8 @@ there’s no need to wait for downloads and no big dent in your hard drive.
 %prep
 %setup -q -c -T
 
-%ifarch x86_64
 ar x %{SOURCE0}
 tar -xzf data.tar.gz
-%endif
-
-%ifarch %{ix86}
-ar x %{SOURCE1}
-tar -xzf data.tar.gz
-%endif
 
 chrpath -d \
     .%{_datadir}/spotify/libwidevinecdmadapter.so \
@@ -167,6 +159,10 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Apr 23 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.77.338.g758ebd78-1
+- Update to 1.0.77.338.g758ebd78.
+- Remove i686 support.
+
 * Mon Mar 05 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.72.117.g6bd7cc73-1
 - Update to 1.0.72.117.g6bd7cc73.
 
