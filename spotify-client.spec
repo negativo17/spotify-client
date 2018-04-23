@@ -3,9 +3,9 @@
 
 # Remove bundled libraries from requirements/provides
 %if 0%{?rhel} == 7
-%global         __requires_exclude ^(libcef\\.so.*|libwidevine.*\\.so.*|libcurl\\.so\\..*|libcrypto\\.so\\..*|libssl\\.so\\..*)$
+%global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*|libcrypto\\.so\\..*|libssl\\.so\\..*)$
 %else
-%global         __requires_exclude ^(libcef\\.so.*|libwidevine.*\\.so.*|libcurl\\.so\\..*)$
+%global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
 %endif
 %global         __provides_exclude ^(lib.*\\.so.*)$
 
@@ -15,7 +15,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0.77.338.g758ebd78
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -33,14 +33,10 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 
 Provides:       spotify = %{version}-%{release}
-Requires:       hicolor-icon-theme
-Requires:       spotify-ffmpeg%{?_isa}
 
-%if 0%{?fedora} >= 27 || 0%{?rhel} == 7
+Requires:       hicolor-icon-theme
 Requires:       spotify-curl%{?_isa}
-%else
-Requires:       libcurl%{?_isa}
-%endif
+Requires:       spotify-ffmpeg%{?_isa}
 
 %if 0%{?rhel} == 7
 Requires:       firewalld
@@ -159,6 +155,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Apr 23 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.77.338.g758ebd78-2
+- Update filters and requirements.
+
 * Mon Apr 23 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.77.338.g758ebd78-1
 - Update to 1.0.77.338.g758ebd78.
 - Remove i686 support.
