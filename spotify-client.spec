@@ -15,7 +15,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.0.80.480.g51b03ac3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -30,21 +30,22 @@ Source10:       README.Fedora
 
 BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
+BuildRequires:  firewalld-filesystem
 BuildRequires:  libappstream-glib
 
 Provides:       spotify = %{version}-%{release}
 
+Requires:       firewalld-filesystem
+Requires(post): firewalld-filesystem
 Requires:       hicolor-icon-theme
+# Chrome Embedded Framework dynamically loads libXss.so.1:
+Requires:       libXScrnSaver%{?_isa}
 Requires:       spotify-curl%{?_isa}
 Requires:       spotify-ffmpeg%{?_isa}
 
 %if 0%{?rhel} == 7
-Requires:       firewalld
-Requires(post): firewalld
 Requires:       spotify-openssl%{?_isa} >= 1.1
 %else
-Requires:       firewalld-filesystem
-Requires(post): firewalld-filesystem
 Obsoletes:      spotify-openssl%{?_isa}
 %endif
 
@@ -153,6 +154,9 @@ fi
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Tue Jul 24 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.80.480.g51b03ac3-2
+- Update build requirements.
+
 * Thu May 31 2018 Simone Caronni <negativo17@gmail.com> - 1:1.0.80.480.g51b03ac3-1
 - Update to version 1.0.80.480.g51b03ac3.
 
