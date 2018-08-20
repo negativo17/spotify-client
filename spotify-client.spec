@@ -62,9 +62,7 @@ there’s no need to wait for downloads and no big dent in your hard drive.
 ar x %{SOURCE0}
 tar -xzf data.tar.gz
 
-chrpath -d \
-    .%{_datadir}/spotify/libwidevinecdmadapter.so \
-    .%{_datadir}/spotify/spotify
+chrpath -d .%{_datadir}/spotify/spotify
 
 cp %{SOURCE10} .
 
