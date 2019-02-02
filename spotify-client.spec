@@ -95,7 +95,7 @@ install -D -m 644 -p %{SOURCE3} \
     %{buildroot}%{_prefix}/lib/firewalld/services/spotify.xml
 
 # Install AppData
-mkdir -p %{buildroot}%{_datadir}/appdata
+mkdir -p %{buildroot}%{_metainfodir}/
 install -p -m 0644 %{SOURCE4} %{buildroot}%{_metainfodir}/
 appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appdata.xml
 
