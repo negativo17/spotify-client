@@ -2,26 +2,19 @@
 %global         __strip /bin/true
 
 # Remove bundled libraries from requirements/provides
-%if 0%{?rhel} == 7
-%global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*|libcrypto\\.so\\..*|libssl\\.so\\..*)$
-%else
 %global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
-%endif
 %global         __provides_exclude ^(lib.*\\.so.*)$
-
-# If firewalld macro is not defined, define it here:
-%{!?firewalld_reload:%global firewalld_reload test -f /usr/bin/firewall-cmd && firewall-cmd --reload --quiet || :}
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.0.96.181.gf6bc1b6b
+Version:        1.0.98.78.gb45d2a6b
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64
 
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-12_amd64.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-10_amd64.deb
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -43,11 +36,7 @@ Requires:       libXScrnSaver%{?_isa}
 Requires:       spotify-curl%{?_isa}
 Requires:       spotify-ffmpeg%{?_isa}
 
-%if 0%{?rhel} == 7
-Requires:       spotify-openssl%{?_isa} >= 1.1
-%else
 Obsoletes:      spotify-openssl%{?_isa}
-%endif
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
@@ -105,53 +94,29 @@ done
 install -D -m 644 -p %{SOURCE3} \
     %{buildroot}%{_prefix}/lib/firewalld/services/spotify.xml
 
-%if 0%{?fedora}
 # Install AppData
 mkdir -p %{buildroot}%{_datadir}/appdata
-install -p -m 0644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/
-appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/spotify.appdata.xml
-%endif
+install -p -m 0644 %{SOURCE4} %{buildroot}%{_metainfodir}/
+appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appdata.xml
 
 %post
-%if 0%{?rhel} == 7
-%{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
-%endif
-/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-%if 0%{?rhel} == 7
-/usr/bin/update-desktop-database &> /dev/null || :
-%endif
 %firewalld_reload
-
-%postun
-%if 0%{?rhel} == 7
-%{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
-%endif
-%if 0%{?rhel} == 7
-/usr/bin/update-desktop-database &> /dev/null || :
-%endif
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    %{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-%posttrans
-%if 0%{?rhel} == 7
-%{_bindir}/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
-%endif
-%{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
 %doc README.Fedora
 %{_bindir}/spotify
 %{_datadir}/applications/spotify.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-%if 0%{?fedora}
-%{_datadir}/appdata/spotify.appdata.xml
-%endif
 %{_libdir}/%{name}
+%{_metainfodir}/spotify.appdata.xml
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sat Feb 02 2019 Simone Caronni <negativo17@gmail.com> - 1:1.0.98.78.gb45d2a6b-1
+- Update to 1.0.98.78.gb45d2a6b.
+- Remove RHEL/CentOS 7 support, no longer supported due to Chrome Embedded
+- Framework requiring glibc 2.18+.
+
 * Sat Jan 12 2019 Simone Caronni <negativo17@gmail.com> - 1:1.0.96.181.gf6bc1b6b-1
 - Update to 1.0.96.181.gf6bc1b6b.
 
