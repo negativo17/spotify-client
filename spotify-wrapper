@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 # Wrapper script for Spotify.
 
 # The spotify binary has a RUNPATH of its origin folder. It requires a few
