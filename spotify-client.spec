@@ -8,7 +8,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.1.10.546.ge08ef575
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -36,7 +36,7 @@ Requires:       libXScrnSaver%{?_isa}
 Requires:       spotify-curl%{?_isa}
 Requires:       spotify-ffmpeg%{?_isa}
 
-Obsoletes:      spotify-openssl%{?_isa}
+Obsoletes:      spotify-openssl
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
@@ -112,6 +112,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sun Sep 29 2019 Simone Caronni <negativo17@gmail.com> - 1:1.1.10.546.ge08ef575-2
+- Fix Obsoletes as per new packaging guidelines.
+
 * Thu Jul 18 2019 Simone Caronni <negativo17@gmail.com> - 1:1.1.10.546.ge08ef575-1
 - Update to 1.1.10.546.ge08ef575.
 
