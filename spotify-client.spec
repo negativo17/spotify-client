@@ -67,6 +67,8 @@ tar -xzf data.tar.gz
 
 chrpath -d .%{_datadir}/spotify/spotify
 
+sed -i -e 's/^Icon=.*/Icon=spotify/g' .%{_datadir}/spotify/spotify.desktop
+
 cp %{SOURCE10} .
 
 %build
@@ -77,10 +79,10 @@ mkdir -p %{buildroot}%{_libdir}/%{name}
 
 # Program resources
 cp -frp .%{_datadir}/spotify/* %{buildroot}%{_libdir}/%{name}
-rm -fr %{buildroot}%{_libdir}/%{name}/{apt-keys,icons}
+rm -fr %{buildroot}%{_libdir}/%{name}/{apt-keys,icons,*.desktop}
 
 # Set permissions
-find %{buildroot}%{_libdir}/%{name} -name ".so" -exec chmod 755 {} \;
+find %{buildroot}%{_libdir}/%{name} -name "*.so" -exec chmod 755 {} \;
 chmod 755 %{buildroot}%{_libdir}/%{name}/spotify
 
 # 512x512 icon along main executable is needed by the client
@@ -101,7 +103,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 # Icons
 for size in 16 22 24 32 48 64 128 256 512; do
     install -p -D -m 644 .%{_datadir}/spotify/icons/spotify-linux-${size}.png \
-        %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/%{name}.png
+        %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/spotify.png
 done
 
 # Firewalld rules
@@ -120,7 +122,7 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %doc README.Fedora
 %{_bindir}/spotify
 %{_datadir}/applications/spotify.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/spotify.png
 %{_libdir}/%{name}
 %{_metainfodir}/spotify.appdata.xml
 %{_prefix}/lib/firewalld/services/spotify.xml
@@ -128,6 +130,7 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %changelog
 * Wed Feb 12 2020 Simone Caronni <negativo17@gmail.com> - 1:1.1.26.501.gbe11e53b-1
 - Update to 1.1.26.501.gbe11e53b from snap.
+- Fix desktop icon.
 
 * Sun Sep 29 2019 Simone Caronni <negativo17@gmail.com> - 1:1.1.10.546.ge08ef575-2
 - Fix Obsoletes as per new packaging guidelines.
