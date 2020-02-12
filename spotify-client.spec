@@ -1,5 +1,6 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
+%global         snap 1
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
@@ -7,14 +8,25 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.10.546.ge08ef575
-Release:        2%{?dist}
+Version:        1.1.26.501.gbe11e53b
+Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64
 
+%if 0%{?snap:1}
+# Constructed from the snap:
+#  snap download spotify --edge
+#  mkdir spotify-client-1.1.26.501.gbe11e53b
+#  unsquashfs -f spotify_41.snap -d spotify-client-1.1.26.501.gbe11e53b /usr/share/spotify
+#  tar -cvJf spotify-client-1.1.26.501.gbe11e53b.tar.xz -C squashfs-root/usr/share/spotify .
+#  rm -fr squashfs-root
+Source0:        %{name}-%{version}.tar.xz
+%else
 Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-19_amd64.deb
+%endif
+
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -36,8 +48,6 @@ Requires:       libXScrnSaver%{?_isa}
 Requires:       spotify-curl%{?_isa}
 Requires:       spotify-ffmpeg%{?_isa}
 
-Obsoletes:      spotify-openssl
-
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
 collection is vast: millions of tracks and counting. Spotify comes in all shapes
@@ -48,8 +58,12 @@ there’s no need to wait for downloads and no big dent in your hard drive.
 %prep
 %setup -q -c -T
 
+%if 0%{?snap:1}
+tar -xJf %{SOURCE0}
+%else
 ar x %{SOURCE0}
 tar -xzf data.tar.gz
+%endif
 
 chrpath -d .%{_datadir}/spotify/spotify
 
@@ -112,6 +126,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Wed Feb 12 2020 Simone Caronni <negativo17@gmail.com> - 1:1.1.26.501.gbe11e53b-1
+- Update to 1.1.26.501.gbe11e53b from snap.
+
 * Sun Sep 29 2019 Simone Caronni <negativo17@gmail.com> - 1:1.1.10.546.ge08ef575-2
 - Fix Obsoletes as per new packaging guidelines.
 
