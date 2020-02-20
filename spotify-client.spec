@@ -1,6 +1,6 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
-%global         snap 1
+#global         snap 1
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
