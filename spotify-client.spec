@@ -8,7 +8,7 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.26.501.gbe11e53b
+Version:        1.1.42.622.gbd112320
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
@@ -24,7 +24,7 @@ ExclusiveArch:  x86_64
 #  rm -fr squashfs-root
 Source0:        %{name}-%{version}.tar.xz
 %else
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-19_amd64.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-37_amd64.deb
 %endif
 
 Source2:        spotify-wrapper
@@ -128,6 +128,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sat Oct 3 10 2020 Christian Birk <chris.h3o66@gmail.com> - 1.1.42.622.gbd112320-1
+- Update to 1.1.42.622.gbd112320 from deb.
+
 * Wed Feb 12 2020 Simone Caronni <negativo17@gmail.com> - 1:1.1.26.501.gbe11e53b-1
 - Update to 1.1.26.501.gbe11e53b from snap.
 - Fix desktop icon.
