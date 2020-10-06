@@ -128,7 +128,7 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
-* Sat Oct 3 10 2020 Christian Birk <chris.h3o66@gmail.com> - 1.1.42.622.gbd112320-1
+* Sat Oct 03 2020 Christian Birk <chris.h3o66@gmail.com> - 1:1.1.42.622.gbd112320-1
 - Update to 1.1.42.622.gbd112320 from deb.
 
 * Wed Feb 12 2020 Simone Caronni <negativo17@gmail.com> - 1:1.1.26.501.gbe11e53b-1
