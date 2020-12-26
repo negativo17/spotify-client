@@ -1,6 +1,6 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
-#global         snap 1
+%global         snap 1
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
@@ -8,7 +8,7 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.42.622.gbd112320
+Version:        1.1.46.916.g416cacf1
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
@@ -16,13 +16,9 @@ URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64
 
 %if 0%{?snap:1}
-# Constructed from the snap:
-#  snap download spotify --edge
-#  mkdir spotify-client-1.1.26.501.gbe11e53b
-#  unsquashfs -f spotify_41.snap -d spotify-client-1.1.26.501.gbe11e53b /usr/share/spotify
-#  tar -cvJf spotify-client-1.1.26.501.gbe11e53b.tar.xz -C squashfs-root/usr/share/spotify .
-#  rm -fr squashfs-root
-Source0:        %{name}-%{version}.tar.xz
+# Get it with:
+# curl -H 'Snap-Device-Series: 16' http://api.snapcraft.io/v2/snaps/info/spotify | jq
+Source0:        https://api.snapcraft.io/api/v1/snaps/download/pOBIoZ2LrCB3rDohMxoYGnbN14EHOgD7_43.snap
 %else
 Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-37_amd64.deb
 %endif
@@ -37,6 +33,10 @@ BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
 BuildRequires:  firewalld-filesystem
 BuildRequires:  libappstream-glib
+
+%if 0%{?snap:1}
+BuildRequires:  squashfs-tools
+%endif
 
 Provides:       spotify = %{version}-%{release}
 
@@ -59,7 +59,7 @@ there’s no need to wait for downloads and no big dent in your hard drive.
 %setup -q -c -T
 
 %if 0%{?snap:1}
-tar -xJf %{SOURCE0}
+unsquashfs -f -d . %{SOURCE0}
 %else
 ar x %{SOURCE0}
 tar -xzf data.tar.gz
@@ -128,6 +128,10 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sat Dec 26 2020 Simone Caronni <negativo17@gmail.com> - 1:1.1.46.916.g416cacf1-1
+- Update to 1.1.46.916.g416cacf1.
+- Allow unpacking snap archive directly from SPEC file.
+
 * Sat Oct 03 2020 Christian Birk <chris.h3o66@gmail.com> - 1:1.1.42.622.gbd112320-1
 - Update to 1.1.42.622.gbd112320 from deb.
 
