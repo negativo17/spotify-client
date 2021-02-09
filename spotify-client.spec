@@ -8,7 +8,7 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.46.916.g416cacf1
+Version:        1.1.52.687.gf5565fe5
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
@@ -18,7 +18,7 @@ ExclusiveArch:  x86_64
 %if 0%{?snap:1}
 # Get it with:
 # curl -H 'Snap-Device-Series: 16' http://api.snapcraft.io/v2/snaps/info/spotify | jq
-Source0:        https://api.snapcraft.io/api/v1/snaps/download/pOBIoZ2LrCB3rDohMxoYGnbN14EHOgD7_43.snap
+Source0:        https://api.snapcraft.io/api/v1/snaps/download/pOBIoZ2LrCB3rDohMxoYGnbN14EHOgD7_44.snap
 %else
 Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-37_amd64.deb
 %endif
@@ -128,6 +128,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Tue Feb 09 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.52.687.gf5565fe5-1
+- Update to 1.1.52.687.gf5565fe5.
+
 * Sat Dec 26 2020 Simone Caronni <negativo17@gmail.com> - 1:1.1.46.916.g416cacf1-1
 - Update to 1.1.46.916.g416cacf1.
 - Allow unpacking snap archive directly from SPEC file.
