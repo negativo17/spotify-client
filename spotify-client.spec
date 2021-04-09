@@ -45,8 +45,11 @@ Requires:       hicolor-icon-theme
 # Chrome Embedded Framework dynamically loads libXss.so.1:
 Requires:       libXScrnSaver%{?_isa}
 Requires:       spotify-curl%{?_isa}
-# Minimal private FFmpeg:
-Requires:       spotify-ffmpeg%{?_isa}
+
+# No "Obsoletes" support in rich booleans
+%if 0%{?rhel} >= 8 || 0%{?fedora}
+Requires:       (spotify-ffmpeg%{?_isa} or ffmpeg-libs%{?_isa} >= 3.4)
+%endif
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
@@ -130,6 +133,8 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %changelog
 * Fri Apr 09 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.56.595.g2d2da0de-1
 - Update to 1.1.56.595.g2d2da0de.
+- Require private FFMpeg minimal build only if a fully fledged FFMpeg 3.4+
+  is not installed.
 
 * Sun Mar 21 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.55.498.gf9a83c60-1
 - Update to 1.1.55.498.gf9a83c60.
