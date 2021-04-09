@@ -25,6 +25,9 @@ Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
+Source5:        https://raw.githubusercontent.com/flathub/com.spotify.Client/master/set-dark-theme-variant.py
+Source6:        https://raw.githubusercontent.com/flathub/com.spotify.Client/master/xsettings.py
+Source7:        https://raw.githubusercontent.com/flathub/com.spotify.Client/master/get-scale-factor.py
 
 Source10:       README.Fedora
 
@@ -42,8 +45,10 @@ Provides:       spotify = %{version}-%{release}
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
 Requires:       hicolor-icon-theme
+Requires:       libnotify%{?_isa}
 # Chrome Embedded Framework dynamically loads libXss.so.1:
 Requires:       libXScrnSaver%{?_isa}
+Requires:       python3dist(python-xlib)
 Requires:       spotify-curl%{?_isa}
 
 # No "Obsoletes" support in rich booleans
@@ -92,11 +97,13 @@ chmod 755 %{buildroot}%{_libdir}/%{name}/spotify
 install -p -D -m 644 .%{_datadir}/spotify/icons/spotify-linux-512.png \
     %{buildroot}%{_libdir}/%{name}/icons/spotify-linux-512.png
 
-# Wrapper script
+# Wrapper script stuff
 mkdir -p %{buildroot}%{_bindir}
 cat %{SOURCE2} | sed -e 's|INSTALL_DIR|%{_libdir}/%{name}|g' \
     > %{buildroot}%{_bindir}/spotify
 chmod +x %{buildroot}%{_bindir}/spotify
+
+install -p -m 0755 %{SOURCE5} %{SOURCE6} %{SOURCE7} %{buildroot}%{_libdir}/%{name}/
 
 # Desktop file
 install -m 0644 -D -p .%{_datadir}/spotify/spotify.desktop \
@@ -135,6 +142,8 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 - Update to 1.1.56.595.g2d2da0de.
 - Require private FFMpeg minimal build only if a fully fledged FFMpeg 3.4+
   is not installed.
+- Require libnotify.
+- Import dark titlebar and scaling support from Flatpak build.
 
 * Sun Mar 21 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.55.498.gf9a83c60-1
 - Update to 1.1.55.498.gf9a83c60.
