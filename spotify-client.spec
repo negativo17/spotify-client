@@ -1,6 +1,5 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
-%global         snap 1
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
@@ -8,7 +7,7 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.55.498.gf9a83c60
+Version:        1.1.56.595.g2d2da0de
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
@@ -20,7 +19,7 @@ ExclusiveArch:  x86_64
 # curl -H 'Snap-Device-Series: 16' http://api.snapcraft.io/v2/snaps/info/spotify | jq
 Source0:        https://api.snapcraft.io/api/v1/snaps/download/pOBIoZ2LrCB3rDohMxoYGnbN14EHOgD7_46.snap
 %else
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}-37_amd64.deb
+Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}_amd64.deb
 %endif
 
 Source2:        spotify-wrapper
@@ -46,6 +45,7 @@ Requires:       hicolor-icon-theme
 # Chrome Embedded Framework dynamically loads libXss.so.1:
 Requires:       libXScrnSaver%{?_isa}
 Requires:       spotify-curl%{?_isa}
+# Minimal private FFmpeg:
 Requires:       spotify-ffmpeg%{?_isa}
 
 %description
@@ -128,6 +128,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Fri Apr 09 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.56.595.g2d2da0de-1
+- Update to 1.1.56.595.g2d2da0de.
+
 * Sun Mar 21 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.55.498.gf9a83c60-1
 - Update to 1.1.55.498.gf9a83c60.
 
