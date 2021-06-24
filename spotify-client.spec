@@ -50,11 +50,8 @@ Requires:       libnotify%{?_isa}
 Requires:       libXScrnSaver%{?_isa}
 Requires:       python3dist(python-xlib)
 Requires:       spotify-curl%{?_isa}
-
 # No "Obsoletes" support in rich booleans
-%if 0%{?rhel} >= 8 || 0%{?fedora}
 Requires:       (spotify-ffmpeg%{?_isa} or ffmpeg-libs%{?_isa} >= 3.4)
-%endif
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
