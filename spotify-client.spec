@@ -7,7 +7,7 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.56.595.g2d2da0de
+Version:        1.1.67.586.gbb5ef64e
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
@@ -135,6 +135,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sat Sep 04 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.67.586.gbb5ef64e-1
+- Update to version 1.1.67.586.gbb5ef64e.
+
 * Fri Apr 09 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.56.595.g2d2da0de-1
 - Update to 1.1.56.595.g2d2da0de.
 - Require private FFMpeg minimal build only if a fully fledged FFMpeg 3.4+
