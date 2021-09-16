@@ -1,5 +1,6 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
+%global         snap 1
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
@@ -8,7 +9,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.1.67.586.gbb5ef64e
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -17,7 +18,7 @@ ExclusiveArch:  x86_64
 %if 0%{?snap:1}
 # Get it with:
 # curl -H 'Snap-Device-Series: 16' http://api.snapcraft.io/v2/snaps/info/spotify | jq
-Source0:        https://api.snapcraft.io/api/v1/snaps/download/pOBIoZ2LrCB3rDohMxoYGnbN14EHOgD7_46.snap
+Source0:        https://api.snapcraft.io/api/v1/snaps/download/pOBIoZ2LrCB3rDohMxoYGnbN14EHOgD7_52.snap
 %else
 Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}_amd64.deb
 %endif
@@ -135,6 +136,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Thu Sep 16 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.67.586.gbb5ef64e-2
+- Update to 1.1.68.628.geb44bd66.
+
 * Sat Sep 04 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.67.586.gbb5ef64e-1
 - Update to version 1.1.67.586.gbb5ef64e.
 
