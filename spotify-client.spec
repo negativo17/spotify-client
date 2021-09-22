@@ -1,6 +1,6 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
-%global         snap 1
+#global         snap 1
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
@@ -8,8 +8,8 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.67.586.gbb5ef64e
-Release:        2%{?dist}
+Version:        1.1.68.632.g2b11de83
+Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -137,6 +137,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Wed Sep 22 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.68.632.g2b11de83-1
+- Update to 1.1.68.632.g2b11de83.
+
 * Thu Sep 16 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.67.586.gbb5ef64e-2
 - Update to 1.1.68.628.geb44bd66.
 
