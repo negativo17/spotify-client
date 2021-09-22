@@ -67,8 +67,9 @@ there’s no need to wait for downloads and no big dent in your hard drive.
 %if 0%{?snap:1}
 unsquashfs -f -d . %{SOURCE0}
 %else
-ar x %{SOURCE0}
+ar x %{SOURCE0} data.tar.gz
 tar -xzf data.tar.gz
+rm -f data.tar.gz
 %endif
 
 chrpath -d .%{_datadir}/spotify/spotify
