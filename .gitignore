@@ -1,3 +1,6 @@
 *.deb
 *.snap
-*.py
+*.tar.xz
+set-dark-theme-variant.py
+xsettings.py
+get-scale-factor.py

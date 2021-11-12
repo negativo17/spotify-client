@@ -8,21 +8,15 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.70.610.g4585142b
+Version:        1.1.72.439.gc253025e
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64
 
-%if 0%{?snap:1}
-# Get it with:
-# curl -H 'Snap-Device-Series: 16' http://api.snapcraft.io/v2/snaps/info/spotify | jq
-Source0:        https://api.snapcraft.io/api/v1/snaps/download/pOBIoZ2LrCB3rDohMxoYGnbN14EHOgD7_54.snap
-%else
-Source0:        http://repository.spotify.com/pool/non-free/s/%{name}/%{name}_%{version}_amd64.deb
-%endif
-
+Source0:        spotify-%{version}.tar.xz
+Source1:        spotify-tarball.py
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -62,56 +56,43 @@ Wherever you go, your music follows you. And because the music plays live,
 there’s no need to wait for downloads and no big dent in your hard drive.
 
 %prep
-%setup -q -c -T
-
-%if 0%{?snap:1}
-unsquashfs -f -d . %{SOURCE0}
-%else
-ar x %{SOURCE0} data.tar.gz
-tar -xzf data.tar.gz
-rm -f data.tar.gz
-%endif
-
-chrpath -d .%{_datadir}/spotify/spotify
-
-sed -i -e 's/^Icon=.*/Icon=spotify/g' .%{_datadir}/spotify/spotify.desktop
-
+%setup -q -n spotify-%{version}
 cp %{SOURCE10} .
 
 %build
 # Nothing to build
 
 %install
+mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_datadir}/applications
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor
 mkdir -p %{buildroot}%{_libdir}/%{name}
 
 # Program resources
-cp -frp .%{_datadir}/spotify/* %{buildroot}%{_libdir}/%{name}
-rm -fr %{buildroot}%{_libdir}/%{name}/{apt-keys,icons,*.desktop}
-
-# Set permissions
-find %{buildroot}%{_libdir}/%{name} -name "*.so" -exec chmod 755 {} \;
+cp -frp Apps *.pak *.so locales *.bin spotify *.so.1 *.dat swiftshader *.json \
+    %{buildroot}%{_libdir}/%{name}
+find %{buildroot}%{_libdir}/%{name} -name "*.so*" -exec chmod 755 {} \;
 chmod 755 %{buildroot}%{_libdir}/%{name}/spotify
+chrpath -d %{buildroot}%{_libdir}/%{name}/spotify
 
 # 512x512 icon along main executable is needed by the client
-install -p -D -m 644 .%{_datadir}/spotify/icons/spotify-linux-512.png \
+install -p -D -m 644 icons/spotify-linux-512.png \
     %{buildroot}%{_libdir}/%{name}/icons/spotify-linux-512.png
 
+# Desktop menu entry
+install -p -m 644 spotify.desktop %{buildroot}%{_datadir}/applications/
+sed -i -e 's/^Icon=.*/Icon=spotify/g' \
+    %{buildroot}%{_datadir}/applications/spotify.desktop
+
 # Wrapper script stuff
-mkdir -p %{buildroot}%{_bindir}
 cat %{SOURCE2} | sed -e 's|INSTALL_DIR|%{_libdir}/%{name}|g' \
     > %{buildroot}%{_bindir}/spotify
 chmod +x %{buildroot}%{_bindir}/spotify
-
 install -p -m 0755 %{SOURCE5} %{SOURCE6} %{SOURCE7} %{buildroot}%{_libdir}/%{name}/
-
-# Desktop file
-install -m 0644 -D -p .%{_datadir}/spotify/spotify.desktop \
-    %{buildroot}%{_datadir}/applications/spotify.desktop
-desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 
 # Icons
 for size in 16 22 24 32 48 64 128 256 512; do
-    install -p -D -m 644 .%{_datadir}/spotify/icons/spotify-linux-${size}.png \
+    install -p -D -m 644 icons/spotify-linux-${size}.png \
         %{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/spotify.png
 done
 
@@ -122,7 +103,10 @@ install -D -m 644 -p %{SOURCE3} \
 # Install AppData
 mkdir -p %{buildroot}%{_metainfodir}/
 install -p -m 0644 %{SOURCE4} %{buildroot}%{_metainfodir}/
-appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appdata.xml
+
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/spotify.appdata.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 
 %post
 %firewalld_reload
@@ -137,6 +121,14 @@ appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/spotify.appda
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Fri Nov 12 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.72.439.gc253025e-1
+- Update to version 1.1.72.439.gc253025e.
+- Rework tarball part, use a python script to check for new versions online
+  directly, update and repack the tarball. Source RPM is 50% smaller (~80 mb
+  removed). Only snaps are supported as deb packages are always lagging behind.
+- Do not touch files in prep section.
+- Move checks in the check section.
+
 * Mon Oct 25 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.70.610.g4585142b-1
 - Fix versioning.
 
