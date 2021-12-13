@@ -1,6 +1,8 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
 %global         snap 1
+# Build id links are sometimes in conflict with other RPMs.
+%define         _build_id_links none
 
 # Remove bundled libraries from requirements/provides
 %global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
@@ -9,7 +11,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.1.72.439.gc253025e
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -121,6 +123,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Dec 13 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.72.439.gc253025e-2
+- Fix build id links in conflict with other RPMs.
+
 * Fri Nov 12 2021 Simone Caronni <negativo17@gmail.com> - 1:1.1.72.439.gc253025e-1
 - Update to version 1.1.72.439.gc253025e.
 - Rework tarball part, use a python script to check for new versions online
