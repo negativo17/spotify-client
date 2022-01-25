@@ -34,7 +34,7 @@ def main():
                 print("SPEC file already contains the latest version: " + version + ".")
                 sys.exit(0)
 
-    print("New version available: " + version + "(" + snap_url + ")")
+    print("New version available: " + version + " (" + snap_url + ")")
 
     print("Updating SPEC file...", end = " ")
     rpmdev_bumpspec_comment = ("Update to version " + version + ".")
