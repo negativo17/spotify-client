@@ -11,7 +11,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.1.80.699.gc3dac750
-Release:        3%{?dist}
+Release:        4%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -50,7 +50,7 @@ Requires:       spotify-curl%{?_isa}
 # No "Obsoletes" support in rich booleans
 Requires:       (spotify-ffmpeg%{?_isa} or ffmpeg-libs%{?_isa} >= 3.4)
 # Dark theme support
-Requires:       xprop%{?_isa}
+Requires:       xprop
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
@@ -125,6 +125,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Thu Mar 31 2022 Simone Caronni <negativo17@gmail.com> - 1:1.1.80.699.gc3dac750-4
+- Remove _isa from xprop requirement, as virtual provides do not provide the
+  isa.
+
 * Mon Mar 21 2022 Simone Caronni <negativo17@gmail.com> - 1:1.1.80.699.gc3dac750-3
 - Simplify requirements for xprop (xorg-x11-utils provides xprop on EL9 and
   lower).
