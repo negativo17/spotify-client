@@ -10,8 +10,8 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.80.699.gc3dac750
-Release:        4%{?dist}
+Version:        1.1.84.716.gc5f8b819
+Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -125,6 +125,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Wed May 11 2022 Simone Caronni <negativo17@gmail.com> - 1:1.1.84.716.gc5f8b819-1
+- Update to version 1.1.84.716.gc5f8b819.
+
 * Thu Mar 31 2022 Simone Caronni <negativo17@gmail.com> - 1:1.1.80.699.gc3dac750-4
 - Remove _isa from xprop requirement, as virtual provides do not provide the
   isa.
