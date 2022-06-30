@@ -1,6 +1,5 @@
 %global         debug_package %{nil}
 %global         __strip /bin/true
-%global         snap 1
 # Build id links are sometimes in conflict with other RPMs.
 %define         _build_id_links none
 
@@ -32,10 +31,7 @@ BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
 BuildRequires:  firewalld-filesystem
 BuildRequires:  libappstream-glib
-
-%if 0%{?snap:1}
 BuildRequires:  squashfs-tools
-%endif
 
 Provides:       spotify = %{version}-%{release}
 
