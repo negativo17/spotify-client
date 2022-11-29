@@ -9,7 +9,7 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.84.716.gc5f8b819
+Version:        1.1.99.878.g1e4ccc6e
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
@@ -69,7 +69,7 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor
 mkdir -p %{buildroot}%{_libdir}/%{name}
 
 # Program resources
-cp -frp Apps *.pak *.so locales *.bin spotify *.so.1 *.dat swiftshader *.json \
+cp -frp Apps *.pak *.so locales *.bin spotify *.so.1 *.dat *.json \
     %{buildroot}%{_libdir}/%{name}
 find %{buildroot}%{_libdir}/%{name} -name "*.so*" -exec chmod 755 {} \;
 chmod 755 %{buildroot}%{_libdir}/%{name}/spotify
@@ -121,6 +121,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Tue Nov 29 2022 Simone Caronni <negativo17@gmail.com> - 1:1.1.99.878.g1e4ccc6e-1
+- Update to version 1.1.99.878.g1e4ccc6e.
+
 * Wed May 11 2022 Simone Caronni <negativo17@gmail.com> - 1:1.1.84.716.gc5f8b819-1
 - Update to version 1.1.84.716.gc5f8b819.
 
