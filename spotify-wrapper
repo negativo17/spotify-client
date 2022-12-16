@@ -11,6 +11,7 @@
 
 export LD_LIBRARY_PATH="INSTALL_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 export SCALE_FACTOR="$(INSTALL_DIR/get-scale-factor.py)"
+export LD_PRELOAD=INSTALL_DIR/spotifywm.so
 
 exec INSTALL_DIR/spotify --force-device-scale-factor=$SCALE_FACTOR "$@" &
 exec INSTALL_DIR/set-dark-theme-variant.py &
