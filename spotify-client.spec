@@ -33,7 +33,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  firewalld-filesystem
 BuildRequires:  libappstream-glib
 
-BuildRequires:  gcc-g++
+BuildRequires:  gcc-c++
 BuildRequires:  libX11-devel
 
 Provides:       spotify = %{version}-%{release}
