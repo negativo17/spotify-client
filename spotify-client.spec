@@ -10,7 +10,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.1.99.878.g1e4ccc6e
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -21,10 +21,6 @@ Source1:        spotify-tarball.py
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
-Source5:        https://raw.githubusercontent.com/flathub/com.spotify.Client/master/set-dark-theme-variant.py
-Source6:        https://raw.githubusercontent.com/flathub/com.spotify.Client/master/xsettings.py
-Source7:        https://raw.githubusercontent.com/flathub/com.spotify.Client/master/get-scale-factor.py
-Source8:        https://raw.githubusercontent.com/dasJ/spotifywm/master/spotifywm.cpp
 
 Source10:       README.Fedora
 
@@ -32,9 +28,6 @@ BuildRequires:  chrpath
 BuildRequires:  desktop-file-utils
 BuildRequires:  firewalld-filesystem
 BuildRequires:  libappstream-glib
-
-BuildRequires:  gcc-c++
-BuildRequires:  libX11-devel
 
 Provides:       spotify = %{version}-%{release}
 
@@ -44,7 +37,6 @@ Requires:       hicolor-icon-theme
 Requires:       libnotify%{?_isa}
 # Chrome Embedded Framework dynamically loads libXss.so.1:
 Requires:       libXScrnSaver%{?_isa}
-Requires:       python3dist(python-xlib)
 Requires:       spotify-curl%{?_isa}
 # No "Obsoletes" support in rich booleans
 Requires:       (spotify-ffmpeg%{?_isa} or (libavcodec58%{?_isa} and libavformat58))
@@ -59,11 +51,6 @@ there’s no need to wait for downloads and no big dent in your hard drive.
 %prep
 %setup -q -n spotify-%{version}
 cp %{SOURCE10} .
-
-
-%build
-# Nothing to build
-g++ %{optflags} -shared -fPIC -lX11 -DSONAME="spotifywm.so" -o spotifywm.so
 
 %install
 mkdir -p %{buildroot}%{_bindir}
@@ -88,11 +75,9 @@ sed -i -e 's/^Icon=.*/Icon=spotify/g' \
     %{buildroot}%{_datadir}/applications/spotify.desktop
 
 # Wrapper script stuff
-install -p -m 0755 spotifywm.so %{buildroot}%{_libdir}/%{name}/
 cat %{SOURCE2} | sed -e 's|INSTALL_DIR|%{_libdir}/%{name}|g' \
     > %{buildroot}%{_bindir}/spotify
 chmod +x %{buildroot}%{_bindir}/spotify
-install -p -m 0755 %{SOURCE5} %{SOURCE6} %{SOURCE7} %{buildroot}%{_libdir}/%{name}/
 
 # Icons
 for size in 16 22 24 32 48 64 128 256 512; do
@@ -125,6 +110,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sun Mar 26 2023 Simone Caronni <negativo17@gmail.com> - 1:1.1.99.878.g1e4ccc6e-3
+- Simplify packaging.
+
 * Fri Dec 16 2022 Simone Caronni <negativo17@gmail.com> - 1:1.1.99.878.g1e4ccc6e-2
 - Update requirements and add-on stuff.
 - Trim changelog.
