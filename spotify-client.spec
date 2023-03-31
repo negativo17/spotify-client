@@ -9,8 +9,8 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.1.99.878.g1e4ccc6e
-Release:        3%{?dist}
+Version:        1.2.8.923.g4f94bf0d
+Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -110,6 +110,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Fri Mar 31 2023 Simone Caronni <negativo17@gmail.com> - 1:1.2.8.923.g4f94bf0d-1
+- Update to version 1.2.8.923.g4f94bf0d.
+
 * Sun Mar 26 2023 Simone Caronni <negativo17@gmail.com> - 1:1.1.99.878.g1e4ccc6e-3
 - Simplify packaging.
 
