@@ -10,7 +10,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.2.31.1205.g4d59ad7c
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -39,7 +39,7 @@ Requires:       libnotify%{?_isa}
 Requires:       libXScrnSaver%{?_isa}
 Requires:       spotify-curl%{?_isa}
 # No "Obsoletes" support in rich booleans
-Requires:       (spotify-ffmpeg%{?_isa} or (libavcodec58%{?_isa} and libavformat58))
+Suggests:       (libavcodec58%{?_isa} and libavformat58)
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
@@ -110,6 +110,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Tue Mar 19 2024 Simone Caronni <negativo17@gmail.com> - 1:1.2.31.1205.g4d59ad7c-2
+- Do not search for spotify-ffmpeg anymore.
+
 * Sun Mar 03 2024 Simone Caronni <negativo17@gmail.com> - 1:1.2.31.1205.g4d59ad7c-1
 - Update to version 1.2.31.1205.g4d59ad7c.
 
