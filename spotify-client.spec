@@ -9,8 +9,8 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.2.31.1205.g4d59ad7c
-Release:        2%{?dist}
+Version:        1.2.37.701.ge66eb7bc
+Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -110,6 +110,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sun Jun 02 2024 Simone Caronni <negativo17@gmail.com> - 1:1.2.37.701.ge66eb7bc-1
+- Update to version 1.2.37.701.ge66eb7bc.
+
 * Tue Mar 19 2024 Simone Caronni <negativo17@gmail.com> - 1:1.2.31.1205.g4d59ad7c-2
 - Do not search for spotify-ffmpeg anymore.
 
