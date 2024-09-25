@@ -2,8 +2,10 @@
 # Wrapper script for Spotify.
 
 # The spotify binary has a RUNPATH of its origin folder. It requires a few
-# librares compiled with minimum options (no external dependencies).
-# The FFMpeg library is loaded ONLY on the system path libraries, ignoring the
+# FFmpeg librares compiled with minimum options (no external dependencies) for
+# playback of local files.
+
+# The FFmpeg library is loaded ONLY on the system path libraries, ignoring the
 # RUNPATH.
 
 # So remove the RUNPATH from the binary, put all the libraries in its private
