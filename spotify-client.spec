@@ -4,7 +4,7 @@
 %define         _build_id_links none
 
 # Remove bundled libraries from requirements/provides
-%global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*|libcurl-gnutls\\.so\\..*)$
+%global         __requires_exclude ^(libcef\\.so.*|libwidevinecdm.*\\.so.*|libEGL\\.so.*|libGLESv2\\.so.*)$
 %global         __provides_exclude ^(lib.*\\.so.*)$
 
 Name:           spotify-client
@@ -31,15 +31,13 @@ BuildRequires:  libappstream-glib
 
 Provides:       spotify = %{version}-%{release}
 
+Obsoletes:      spotify-curl
+
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
 Requires:       hicolor-icon-theme
 Requires:       libnotify%{?_isa}
-# Chrome Embedded Framework dynamically loads libXss.so.1:
-Requires:       libXScrnSaver%{?_isa}
-Requires:       spotify-curl%{?_isa}
-# No "Obsoletes" support in rich booleans
-Suggests:       (libavcodec58%{?_isa} and libavformat58)
+Requires:       spotify-ffmpeg%{?_isa}
 
 %description
 Think of Spotify as your new music collection. Your library. Only this time your
@@ -112,6 +110,8 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %changelog
 * Tue Sep 24 2024 Simone Caronni <negativo17@gmail.com> - 1:1.2.45.454.gc16ec9f6-1
 - Update to version 1.2.45.454.gc16ec9f6.
+- libcurl and libXss are no longer required.
+- Re-add custom libavcodec & libavformat for local playback and syncing.
 
 * Mon Aug 05 2024 Simone Caronni <negativo17@gmail.com> - 1:1.2.42.290.g242057a2-1
 - Update to version 1.2.42.290.g242057a2.
