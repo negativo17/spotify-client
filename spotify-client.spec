@@ -9,8 +9,8 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.2.45.454.gc16ec9f6
-Release:        2%{?dist}
+Version:        1.2.48.405.gf2c48e6f
+Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -108,6 +108,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Fri Oct 25 2024 Simone Caronni <negativo17@gmail.com> - 1:1.2.48.405.gf2c48e6f-1
+- Update to version 1.2.48.405.gf2c48e6f.
+
 * Sun Oct 20 2024 Simone Caronni <negativo17@gmail.com> - 1:1.2.45.454.gc16ec9f6-2
 - libcurl and libXss are no longer required.
 - Re-add custom libavcodec & libavformat for local playback and syncing.
