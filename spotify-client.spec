@@ -10,7 +10,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.2.74.477.g3be53afe
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -30,8 +30,6 @@ BuildRequires:  firewalld-filesystem
 BuildRequires:  libappstream-glib
 
 Provides:       spotify = %{version}-%{release}
-
-Obsoletes:      spotify-curl
 
 Requires:       firewalld-filesystem
 Requires(post): firewalld-filesystem
@@ -108,6 +106,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Nov 24 2025 Simone Caronni <negativo17@gmail.com> - 1:1.2.74.477.g3be53afe-2
+- Adjust Electron flags to support Wayland. You get a blue bar, but at least you get
+  Wayland support.
+- Drop obsoleting spotify-curl.
+
 * Mon Oct 20 2025 Simone Caronni <negativo17@gmail.com> - 1:1.2.74.477.g3be53afe-1
 - Update to version 1.2.74.477.g3be53afe.
 

@@ -13,4 +13,20 @@
 
 export LD_LIBRARY_PATH="INSTALL_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
-exec INSTALL_DIR/spotify "$@" &
+declare -a FLAGS=(--enable-gpu-rasterization --enable-zero-copy --enable-gpu-compositing --enable-native-gpu-memory-buffers --enable-oop-rasterization --disable-gpu-blocklist --enable-features=UseSkiaRenderer --class=spotify)
+
+if [[ $XDG_SESSION_TYPE == "wayland" ]]; then
+    WAYLAND_SOCKET=${WAYLAND_DISPLAY:-"wayland-0"}
+
+    if [[ -e "$XDG_RUNTIME_DIR/${WAYLAND_SOCKET}" ]]; then
+        echo "Wayland socket is available, running natively on Wayland."
+        FLAGS+=(--ozone-platform=wayland)
+    else
+        echo "Wayland socket not available, running through Xwayland."
+    fi
+fi
+
+echo "Passing the following arguments to Electron:"
+printf "  %s\n" "${FLAGS[@]}"
+
+exec INSTALL_DIR/spotify "${FLAGS[@]}" "$@"
