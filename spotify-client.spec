@@ -9,15 +9,15 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.2.74.477.g3be53afe
-Release:        2%{?dist}
+Version:        1.2.77.358.g4339a634
+Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64
 
-Source0:        spotify-%{version}.tar.xz
-Source1:        spotify-tarball.py
+Source0:        %{name}-%{version}.tar.xz
+Source1:        %{name}-bump.sh
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -45,7 +45,7 @@ Wherever you go, your music follows you. And because the music plays live,
 there’s no need to wait for downloads and no big dent in your hard drive.
 
 %prep
-%setup -q -n spotify-%{version}
+%autosetup
 cp %{SOURCE10} .
 
 %install
@@ -106,6 +106,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Wed Nov 26 2025 Simone Caronni <negativo17@gmail.com> - 1:1.2.77.358.g4339a634-1
+- Update to 1.2.77.358.g4339a634.
+- Build again from deb file as input and not from snap.
+- Spotify supports Wayland natively now, restore the old wrapper script without parameters.
+
 * Mon Nov 24 2025 Simone Caronni <negativo17@gmail.com> - 1:1.2.74.477.g3be53afe-2
 - Adjust Electron flags to support Wayland. You get a blue bar, but at least you get
   Wayland support.
