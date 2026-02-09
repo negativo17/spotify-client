@@ -9,7 +9,7 @@
 
 Name:           spotify-client
 Summary:        Spotify music player native client
-Version:        1.2.79.427.g80eb4a07
+Version:        1.2.82.428.g0ac8be2b
 Release:        1%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
