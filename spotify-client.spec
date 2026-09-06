@@ -10,7 +10,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.2.96.518.g366879e1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -47,6 +47,9 @@ there’s no need to wait for downloads and no big dent in your hard drive.
 %prep
 %autosetup
 cp %{SOURCE10} .
+rm -fr apt-keys
+chrpath -d libcef.so
+chrpath -d spotify
 
 %install
 mkdir -p %{buildroot}%{_bindir}
@@ -55,15 +58,12 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor
 mkdir -p %{buildroot}%{_libdir}/%{name}
 
 # Program resources
-cp -frp Apps *.pak *.so locales *.bin spotify *.so.1 *.dat *.json \
-    %{buildroot}%{_libdir}/%{name}
+cp -frp * %{buildroot}%{_libdir}/%{name}
+
+rm -fr %{buildroot}%{_libdir}/%{name}/{icons,spotify.desktop}
+
 find %{buildroot}%{_libdir}/%{name} -name "*.so*" -exec chmod 755 {} \;
 chmod 755 %{buildroot}%{_libdir}/%{name}/spotify
-chrpath -d %{buildroot}%{_libdir}/%{name}/spotify
-
-# 512x512 icon along main executable is needed by the client
-install -p -D -m 644 icons/spotify-linux-512.png \
-    %{buildroot}%{_libdir}/%{name}/icons/spotify-linux-512.png
 
 # Desktop menu entry
 install -p -m 644 spotify.desktop %{buildroot}%{_datadir}/applications/
@@ -106,6 +106,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Sun Sep 06 2026 Simone Caronni <negativo17@gmail.com> - 1:1.2.96.518.g366879e1-2
+- Update SPEC file, include crash handler config and assets.
+
 * Thu Aug 20 2026 Simone Caronni <negativo17@gmail.com> - 1:1.2.96.518.g366879e1-1
 - Update to 1.2.96.518.g366879e1.
 
