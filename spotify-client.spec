@@ -10,14 +10,14 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.2.96.518.g366879e1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
 ExclusiveArch:  x86_64
 
 Source0:        %{name}-%{version}.tar.xz
-Source1:        %{name}-bump.sh
+Source1:        spotify-update.py
 Source2:        spotify-wrapper
 Source3:        spotify.xml
 Source4:        spotify.appdata.xml
@@ -106,6 +106,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Mon Sep 07 2026 Simone Caronni <negativo17@gmail.com> - 1:1.2.96.518.g366879e1-3
+- Replace the bump script with spotify-update.py, which also finds the latest
+  version.
+
 * Sun Sep 06 2026 Simone Caronni <negativo17@gmail.com> - 1:1.2.96.518.g366879e1-2
 - Update SPEC file, include crash handler config and assets.
 
