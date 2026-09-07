@@ -1,3 +1,4 @@
 *.deb
 *.snap
 *.tar.xz
+__pycache__/
