@@ -10,7 +10,7 @@
 Name:           spotify-client
 Summary:        Spotify music player native client
 Version:        1.2.96.518.g366879e1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Epoch:          1
 License:        https://www.spotify.com/legal/end-user-agreement
 URL:            http://www.spotify.com/
@@ -20,7 +20,7 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        spotify-update.py
 Source2:        spotify-wrapper
 Source3:        spotify.xml
-Source4:        spotify.appdata.xml
+Source4:        spotify.metainfo.xml
 
 Source10:       README.Fedora
 
@@ -90,7 +90,7 @@ mkdir -p %{buildroot}%{_metainfodir}/
 install -p -m 0644 %{SOURCE4} %{buildroot}%{_metainfodir}/
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/spotify.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/spotify.metainfo.xml
 desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 
 %post
@@ -102,10 +102,13 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/spotify.desktop
 %{_datadir}/applications/spotify.desktop
 %{_datadir}/icons/hicolor/*/apps/spotify.png
 %{_libdir}/%{name}
-%{_metainfodir}/spotify.appdata.xml
+%{_metainfodir}/spotify.metainfo.xml
 %{_prefix}/lib/firewalld/services/spotify.xml
 
 %changelog
+* Fri Oct 02 2026 Simone Caronni <negativo17@gmail.com> - 1:1.2.96.518.g366879e1-4
+- Update AppStream metadata.
+
 * Mon Sep 07 2026 Simone Caronni <negativo17@gmail.com> - 1:1.2.96.518.g366879e1-3
 - Replace the bump script with spotify-update.py, which also finds the latest
   version.
